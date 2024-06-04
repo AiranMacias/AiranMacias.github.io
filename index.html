@@ -1,123 +1,52 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>Airan Dave Macias</title>
-        <meta charset="utf-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-        <link rel="stylesheet" href="assets/css/main.css" />
-        <noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-    </head>
-    <body class="is-preload">
-        <!-- Header -->
-        <header id="header">
-            <h1>Airan Macias</h1>
-            <nav>
-                <ul>
-                    <li><a href="#intro">Intro</a></li>
-                    <li><a href="#one">What I Do</a></li>
-                    <li><a href="#two">Who I Am</a></li>
-                    <li><a href="#work">My Work</a></li>
-                    <li><a href="#contact">Contact</a></li>
-                </ul>
-            </nav>
-        </header>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video Gallery</title>
+    <style>
+        #video-gallery iframe, #video-gallery video {
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Video Gallery</h1>
+    <textarea id="video-urls" rows="4" cols="50" placeholder="Enter comma-separated video URLs here"></textarea><br>
+    <button onclick="loadVideos()">Load Videos</button>
 
-        <!-- Intro -->
-        <section id="intro" class="main style1 dark fullscreen">
-            <div class="content">
-                <header>
-                    <h2>Airan Dave Macias</h2>
-                </header>
-                <p>Data Analyst | PC Builder | Cat Lover</p>
-                <footer>
-                    <a href="#one" class="button style2 down">More</a>
-                </footer>
-            </div>
-        </section>
+    <div id="video-gallery"></div>
 
-        <!-- One -->
-        <section id="one" class="main style2 right dark fullscreen">
-            <div class="content box style2">
-                <header>
-                    <h2>What I Do</h2>
-                </header>
-                <p>
-                    As a <b>Data analyst</b>, I <b>collect </b>and <b>analyze</b> data to extract insights and trends that inform
-                    business decisions. I create reports and visualizations to communicate my findings and collaborate with other
-                    teams to meet their data needs
-                </p>
-            </div>
-            <a href="#two" class="button style2 down anchored">Next</a>
-        </section>
+    <script>
+        function loadVideos() {
+            const input = document.getElementById('video-urls').value;
+            let videoUrls = input.split(',').map(url => url.trim());
+            if (videoUrls.length === 1 && !videoUrls[0].includes(',')) {
+                videoUrls = [input.trim()];
+            }
+            const gallery = document.getElementById('video-gallery');
+            gallery.innerHTML = '';
 
-        <!-- Two -->
-        <section id="two" class="main style2 left dark fullscreen">
-            <div class="content box style2">
-                <header>
-                    <h2>Who I Am</h2>
-                </header>
-                <p>
-                    I work as a Data Analyst for an exciting startup company in Chicago, USA. that specializes in helping MSP's
-                    streamline and automate their business processes, and we provide top-notch BI tools to help them monitor and
-                    analyze their valuable data. Prior to my current role as a Data Analyst I worked as a Marine Engineer for one
-                    of the world's largest shipping companies. You might know this company from the movie
-                    <b>"Captain Philipps"</b>. While I enjoyed the challenges and adventures that came with that role, I
-                    ultimately decided to pursue my passion for coding.
-                </p>
-            </div>
-            <a href="#work" class="button style2 down anchored">Next</a>
-        </section>
-
-        <!-- Work -->
-        <section id="work" class="main style3 primary">
-            <div class="content">
-                <header>
-                    <h2>Personal Projects</h2>
-                </header>
-
-                <!-- Gallery  -->
-                <div class="icons">
-                    <h3>
-                        This project showcases an interactive dashboard for bike sales. This dashboard not only provides
-                        insightful data visualizations and analytics but also demonstrates its dynamic capability to automatically
-                        update whenever a new Excel file is dropped into the designated folder, ensuring that the most current
-                        sales data is always reflected in the dashboard
-                    </h3>
-                    <iframe
-                        title="Bike Sales Report"
-                        width="900"
-                        height="400"
-                        src="https://app.powerbi.com/view?r=eyJrIjoiMjQwMzNjNWMtYjI1ZS00YjY5LWI0YjAtODhhOTcwZjFiMGQyIiwidCI6IjEzMzIxZjJlLTIwYjctNDQ3Yy04YjU5LTFjYWRlN2I3Mjc4YiIsImMiOjEwfQ%3D%3D"
-                        frameborder="0"
-                        allowfullscreen="true"
-                    ></iframe>
-                </div>
-            </div>
-        </section>
-
-        <!-- Contact -->
-        
-
-        <!-- Footer -->
-        <footer id="footer">
-            <!-- Icons -->
-            <ul class="icons">
-                <li>
-                    <a href="https://www.linkedin.com/in/airandavemacias/" class="icon brands fa-linkedin-in"
-                        ><span class="label">LinkedIn</span></a
-                    >
-                </li>
-            </ul>
-        </footer>
-
-        <!-- Scripts -->
-        <script src="assets/js/jquery.min.js"></script>
-        <script src="assets/js/jquery.poptrox.min.js"></script>
-        <script src="assets/js/jquery.scrolly.min.js"></script>
-        <script src="assets/js/jquery.scrollex.min.js"></script>
-        <script src="assets/js/browser.min.js"></script>
-        <script src="assets/js/breakpoints.min.js"></script>
-        <script src="assets/js/util.js"></script>
-        <script src="assets/js/main.js"></script>
-    </body>
+            videoUrls.forEach(url => {
+                if (url.match(/\.(mp4|mov|webm|ogg)$/i)) {
+                    const video = document.createElement('video');
+                    video.src = url;
+                    video.width = 560;
+                    video.height = 315;
+                    video.controls = true;
+                    gallery.appendChild(video);
+                } else {
+                    const iframe = document.createElement('iframe');
+                    iframe.src = url;
+                    iframe.width = "560";
+                    iframe.height = "315";
+                    iframe.frameBorder = "0";
+                    iframe.allow = "accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture";
+                    iframe.allowFullscreen = true;
+                    gallery.appendChild(iframe);
+                }
+            });
+        }
+    </script>
+</body>
 </html>
